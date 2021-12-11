@@ -1,3 +1,4 @@
+const { navajowhite } = require('color-name');
 var fs = require('fs');
 
 class Contenedor {
@@ -31,6 +32,19 @@ class Contenedor {
             return [];
         }
         return JSON.parse(contenido);
+
+    }
+     getAllSync () {
+        let contenido
+        try{
+            contenido =  fs.readFileSync('./' + this.archivo,'utf-8')
+        }catch(err){
+            console.log('No se pudo leer el contenido del archivo '+err)
+        } 
+        if(contenido == "") {
+            return [];
+        }
+        return (JSON.parse(contenido));
 
     }
 
@@ -74,45 +88,8 @@ class Contenedor {
 }
 
 
-
-let contenedor = new Contenedor("productos.txt");
-let producto1= {
-    title:"Escuadra",
-    price:22,
-    thumbnail:"http://imagen.com"
+module.exports ={
+    contenedor: new Contenedor("productos.txt")
 }
-
-let producto2= {
-    title:"cuadernola",
-    price:23,
-    thumbnail:"http://imagen.com"
-}
-
-let producto3= {
-    title:"Lapiz",
-    price:24,
-    thumbnail:"http://imagen.com"
-}
-
- contenedor.save(producto1).then((result)=> {
-    console.log("id "+result)
-    contenedor.save(producto2).then((result)=> {
-        console.log("id "+result)
-        contenedor.save(producto3).then((result)=> {
-            console.log("id "+result)
-            contenedor.getByIdNumber(1).then((producto)=> {
-                console.log(producto)
-                contenedor.getAll().then((productos) => {
-                    console.log(productos)
-                    contenedor.deleteById(1).then(()=> {
-                        contenedor.getAll().then((productos)=>{console.log(productos)})
-                    })
-                })
-            })
-        });
-    });
-});
-
-
 
 
