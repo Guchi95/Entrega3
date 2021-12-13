@@ -39,7 +39,18 @@ const server = app.listen(PORT, () => {
 
 app.get('/productos', (req, res) => {
 
-        res.send(contenedor.getAllSync())
+        res.send(contenedor.getAllSync());
 
  })
+
+app.get('/productoRandom', (req, res) => {
+
+    let productos = contenedor.getAllSync();
+    let cantProdu = productos.length;
+    let randomSeed = Math.random();
+    let index = Math.ceil(randomSeed*cantProdu)-1;
+
+    res.send(productos[index]);
+
+})
  

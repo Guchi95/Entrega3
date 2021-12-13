@@ -4,6 +4,7 @@ var fs = require('fs');
 class Contenedor {
     constructor (archivo){
         this.archivo = archivo;
+        this.deleteAll();
     }
 
     async save(producto) {
